@@ -14,32 +14,33 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-    <!-- sidebar, contains search input and history -->
+    <div class="text-center bg-dark text-white">
+        <div class="card-header">
+          Weather Dashboard
+        </div>
+      </div>
     <div class="container-fluid">
       <div class="row flex-nowrap">
-        <div class="col-s3">
+         <!-- sidebar, contains search input and history -->
+        <div class="col-s3 bg-secondary text-center font-weight-bold">
           <span class="fs-5 d-none d-sm-inline">Search for a City:</span>
           <!-- search input -->
           <form class="form-group">
             <input type="text" id="form1" class="form-control" />
-            <label class="form-label" for="form1">Search</label>
-            <button
-              type="button"
-              id="search-button"
-              class="btn btn-primary"
-              data-mdb-ripple-init
-            >
-search            </button>
+            <label class="form-label" for="form1"></label>
+            <button type="button" id="search-button" class="btn btn-info" data-mdb-ripple-init>search</button>
           </form>
           <!--  -->
-          <hr style="width: 80%; text-align: left; margin-left: 0" />
+          <hr style="width: 80%; text-align: left;"/>
           <!-- populate list with search history, saved in localStorage -->
           <div id="search-history">
+            <span class="fs-5 d-none d-sm-inline">Recent Searches<span>
             <ul></ul>
             <!-- search history from localStorage -->
           </div>
         </div>
-        <div class="col-s9">
+        <!-- Main body, contains weather cards -->
+        <div class="col-s9 text-center">
           <h1>Search Results Go Here</h1>
         </div>
       </div>
