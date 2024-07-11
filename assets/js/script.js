@@ -29,6 +29,25 @@ function fetchCity(data) {
       console.error(err);
     });
 }
+function fetchHistory(cityName) {
+  const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=449e0f70c68d023360a6656f43c00e19`;
+
+  fetch(apiUrl)
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      if (!data[0]) {
+        alert("Location not found");
+      } else {
+        fetchWeather(data[0]);
+        // storeData(cityName);
+      }
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
+}
 // extracts the latitude/longitude properties from the "city" data above, and uses the openWeather API to check weather conditions in the target city
 function fetchWeather(searchedCity) {
   const { lat } = searchedCity;
@@ -63,6 +82,7 @@ function storeData(searchCity) {
 
 // create Recent Searches button with link to cities in localStorage
 function createHistory() {
+  history.textContent = '';
   searchData.forEach((city) => {
     // create <button> element for each city in history
     const recentSearches = document.getElementById("history");
@@ -118,19 +138,24 @@ function renderCurrentWeather(city, weather) {
     mainCard.append(cityH5, dateH6, iconImg, tempH6, windH6, humidH6);
 
   // 5 day forecast, repeat above function
+
+    // clear previous data
+ forecast.textContent = '';
+
   for (let i = 1; i < 6; i++) {
  
 // assign values based on relevant day
 const cityName = weather.city.name;
-const date = weather.list[i*8].dt_txt;
-const temp = weather.list[i*8].main.temp;
-const wind = weather.list[i*8].wind.speed;
-const humid = weather.list[i*8].main.humidity;
-const icon = weather.list[i*8].weather[0].icon;
-console.log(cityName, date, temp, wind, humid, icon);
+const date = weather.list[i*8-1].dt_txt;
+const temp = weather.list[i*8-1].main.temp;
+const wind = weather.list[i*8-1].wind.speed;
+const humid = weather.list[i*8-1].main.humidity;
+const icon = weather.list[i*8-1].weather[0].icon;
+
     // create cards
     const dayCard = document.createElement('div');
     dayCard.classList.add('card', 'col-4', 'dayCard', 'bg-primary', 'align-self-left', 'm-3');
+
     const cityH5 = document.createElement('h5');
     const dateH6 = document.createElement('h6');
     const iconImg = document.createElement('img');
@@ -147,14 +172,10 @@ console.log(cityName, date, temp, wind, humid, icon);
   humidH6.textContent = `Humidity: ${humid}`;
 
   // append to #forecast
-  forecast.append(dayCard);
   dayCard.append(cityH5, dateH6, iconImg, tempH6, windH6, humidH6);
+  forecast.append(dayCard);
   };
 }
-
-// ERROR: array pulled from API has a length of 40, is 1-2 short of a full 5 day cycle
-
-
 // recall saved search
 function weatherRecall(e) {
   if (!e.target.matches('.city-button')) {
@@ -162,10 +183,12 @@ function weatherRecall(e) {
   }
  const target = e.target;
  const cityName = target.textContent;
-fetchCity(cityName);
+fetchHistory(cityName);
+console.log(cityName);
 }
 
 
 searchButton.addEventListener('click', fetchCity);
 // searchHistoryContainer.addEventListener("click", cityRecall)
 history.addEventListener('click', weatherRecall);
+createHistory();
