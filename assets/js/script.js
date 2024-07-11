@@ -66,7 +66,7 @@ function createHistory() {
     // create <button> element for each city in history
     const recentSearches = document.getElementById("history");
     const cityBtn = document.createElement("button");
-    cityBtn.classList.add("btn-btn-light");
+    cityBtn.classList.add("btn-btn-light", "city-button");
     cityBtn.textContent = city;
     // append buttons to #history
     history.append(cityBtn);
@@ -76,7 +76,7 @@ function createHistory() {
 
 // recall/display relevant data from most recent search (date, weather conditions, temperature, humidity, wind speed)
 function renderCurrentWeather(city, weather) {
-  console.log(weather);
+ container.textContent = '';
   // Pull relevant data values from array
   const cityName = weather.city.name;
   const date = weather.list[0].dt_txt;
@@ -106,5 +106,17 @@ function renderCurrentWeather(city, weather) {
 
 // 5 day forecast
 
-searchButton.addEventListener("click", fetchCity);
+// recall saved search
+function weatherRecall(e) {
+  if (!e.target.matches('.city-button')) {
+    return;
+  }
+ const target = e.target;
+ const cityName = target.textContent;
+fetchCity(cityName);
+}
+
+
+searchButton.addEventListener('click', fetchCity);
 // searchHistoryContainer.addEventListener("click", cityRecall)
+history.addEventListener('click', weatherRecall);
