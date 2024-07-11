@@ -8,15 +8,6 @@ img {
     width: 100px;
 }
 
-#forecast {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    border: 1px solid red; /* Add a border to see the container */
-    min-height: 100px; /* Ensure it has some height */
-    width: 100%; /* Ensure it takes up available width */
-  }
-
   .dayCard {
     width: 30%;
     margin: 10px;
