@@ -5,6 +5,7 @@ const searchButton = document.getElementById("search-button");
 const searchData = JSON.parse(localStorage.getItem("searchResults")) || [];
 // container for main body weather results
 const container = document.getElementById("container");
+const forecast = document.getElementById('forecast');
 // container for search history sidebar
 const history = document.getElementById("history");
 
@@ -33,7 +34,7 @@ function fetchWeather(searchedCity) {
   const { lat } = searchedCity;
   const { lon } = searchedCity;
 
-  const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=449e0f70c68d023360a6656f43c00e19`;
+  const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=449e0f70c68d023360a6656f43c00e19`;
 
   fetch(weatherUrl)
     .then(function (res) {
@@ -76,7 +77,12 @@ function createHistory() {
 
 // recall/display relevant data from most recent search (date, weather conditions, temperature, humidity, wind speed)
 function renderCurrentWeather(city, weather) {
+  // VVV test weather array/check values in array VVV
+  console.log(weather);
+
+  // clear previous data
  container.textContent = '';
+ 
   // Pull relevant data values from array
   const cityName = weather.city.name;
   const date = weather.list[0].dt_txt;
@@ -84,27 +90,70 @@ function renderCurrentWeather(city, weather) {
   const wind = weather.list[0].wind.speed;
   const humid = weather.list[0].main.humidity;
   const icon = weather.list[0].weather[0].icon;
+
   const iconUrl = `https://openweathermap.org/img/wn/${icon}.png`;
   // create containers for data in HTML
 
-  const cityH1 = document.createElement("h1");
-  const dateH1 = document.createElement("h1");
-  const tempH1 = document.createElement("h1");
-  const windH1 = document.createElement("h1");
-  const humidH1 = document.createElement("h1");
-  const iconImg = document.createElement("img");
+  // create card for weather results
+  const mainCard = document.createElement('div');
+  mainCard.classList.add('card', 'col-6', 'mainCard', 'bg-info', 'align-self-left', 'm-3');
+  const cityH5 = document.createElement('h5');
+  const dateH6 = document.createElement('h6');
+  const iconImg = document.createElement('img');
+  const tempH6 = document.createElement('h6');
+  const windH6 = document.createElement('h6');
+  const humidH6 = document.createElement('h6');
+  
+
   // assign elements with weather data
-  cityH1.textContent = cityName;
-  dateH1.textContent = date;
-  tempH1.textContent = temp;
-  windH1.textContent = wind;
-  humidH1.textContent = humid;
+  cityH5.textContent = cityName;
+  dateH6.textContent = date;
   iconImg.setAttribute("src", iconUrl);
+  tempH6.textContent = `Temperature: ${temp}`;
+  windH6.textContent = `Wind Speed: ${wind}`;
+  humidH6.textContent = `Humidity: ${humid}`;
+
   // append to #container in HTML
-  container.append(cityH1, dateH1, tempH1, windH1, humidH1, iconImg);
+    container.append(mainCard);
+    mainCard.append(cityH5, dateH6, iconImg, tempH6, windH6, humidH6);
+
+  // 5 day forecast, repeat above function
+  for (let i = 1; i < 6; i++) {
+ 
+// assign values based on relevant day
+const cityName = weather.city.name;
+const date = weather.list[i*8].dt_txt;
+const temp = weather.list[i*8].main.temp;
+const wind = weather.list[i*8].wind.speed;
+const humid = weather.list[i*8].main.humidity;
+const icon = weather.list[i*8].weather[0].icon;
+console.log(cityName, date, temp, wind, humid, icon);
+    // create cards
+    const dayCard = document.createElement('div');
+    dayCard.classList.add('card', 'col-4', 'dayCard', 'bg-primary', 'align-self-left', 'm-3');
+    const cityH5 = document.createElement('h5');
+    const dateH6 = document.createElement('h6');
+    const iconImg = document.createElement('img');
+    const tempH6 = document.createElement('h6');
+    const windH6 = document.createElement('h6');
+    const humidH6 = document.createElement('h6');
+
+      // assign elements with weather data for relevant days
+  cityH5.textContent = cityName;
+  dateH6.textContent = date;
+  iconImg.setAttribute("src", iconUrl);
+  tempH6.textContent = `Temperature: ${temp}`;
+  windH6.textContent = `Wind Speed: ${wind}`;
+  humidH6.textContent = `Humidity: ${humid}`;
+
+  // append to #forecast
+  forecast.append(dayCard);
+  dayCard.append(cityH5, dateH6, iconImg, tempH6, windH6, humidH6);
+  };
 }
 
-// 5 day forecast
+// ERROR: array pulled from API has a length of 40, is 1-2 short of a full 5 day cycle
+
 
 // recall saved search
 function weatherRecall(e) {
