@@ -129,8 +129,8 @@ function renderCurrentWeather(city, weather) {
   cityH5.textContent = cityName;
   dateH6.textContent = date;
   iconImg.setAttribute("src", iconUrl);
-  tempH6.textContent = `Temperature: ${temp}`;
-  windH6.textContent = `Wind Speed: ${wind}`;
+  tempH6.textContent = `Temperature: ${temp}\u00B0`;
+  windH6.textContent = `Wind Speed: ${wind} mph`;
   humidH6.textContent = `Humidity: ${humid}`;
 
   // append to #container in HTML
@@ -167,8 +167,8 @@ const icon = weather.list[i*8-1].weather[0].icon;
   cityH5.textContent = cityName;
   dateH6.textContent = date;
   iconImg.setAttribute("src", iconUrl);
-  tempH6.textContent = `Temperature: ${temp}`;
-  windH6.textContent = `Wind Speed: ${wind}`;
+  tempH6.textContent = `Temperature: ${temp}\u00B0`;
+  windH6.textContent = `Wind Speed: ${wind} mph`;
   humidH6.textContent = `Humidity: ${humid}`;
 
   // append to #forecast
