@@ -116,7 +116,7 @@ function renderCurrentWeather(city, weather) {
 
   // create card for weather results
   const mainCard = document.createElement('div');
-  mainCard.classList.add('card', 'col-6', 'mainCard', 'bg-info', 'align-self-left', 'm-3');
+  mainCard.classList.add('card', 'col-8', 'mainCard', 'bg-info', 'align-self-left', 'm-3');
   const cityH5 = document.createElement('h5');
   const dateH6 = document.createElement('h6');
   const iconImg = document.createElement('img');
@@ -154,7 +154,7 @@ const icon = weather.list[i*8-1].weather[0].icon;
 
     // create cards
     const dayCard = document.createElement('div');
-    dayCard.classList.add('card', 'col-4', 'dayCard', 'bg-primary', 'align-self-left', 'm-3');
+    dayCard.classList.add('card', 'col-2', 'dayCard', 'bg-primary', 'align-self-left', 'm-3');
 
     const cityH5 = document.createElement('h5');
     const dateH6 = document.createElement('h6');
