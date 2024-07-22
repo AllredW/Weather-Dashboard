@@ -11,7 +11,7 @@ const history = document.getElementById("history");
 
 function fetchCity(data) {
   const city = document.getElementById("form1").value.trim();
-  const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=449e0f70c68d023360a6656f43c00e19`;
+  const apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=449e0f70c68d023360a6656f43c00e19`;
 
   fetch(apiUrl)
     .then(function (res) {
@@ -30,7 +30,7 @@ function fetchCity(data) {
     });
 }
 function fetchHistory(cityName) {
-  const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=449e0f70c68d023360a6656f43c00e19`;
+  const apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=449e0f70c68d023360a6656f43c00e19`;
 
   fetch(apiUrl)
     .then(function (res) {
